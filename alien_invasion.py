@@ -22,7 +22,7 @@ def run_game():  # 初始化pygame、设置和屏幕对象
     while True:  # 开始游戏的主循环
         gf.check_events(first_settings, screen, ship, bullets)
         ship.update()
-        gf.update_bullets(bullets)
+        gf.update_bullets(thanos, first_settings, screen, ship, thanos, bullets)
         gf.update_thanos(first_settings, thanos)
         gf.update_screen(first_settings, screen, ship, thanos, bullets)
         '''bullets.update()
