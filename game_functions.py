@@ -50,20 +50,29 @@ def update_screen(first_settings, screen, ship, thanos, bullets):  # 更新屏�
         bullet.draw_bullet()
     ship.blitme()
     thanos.draw(screen)
-    #thano.blitme()
+    # thano.blitme()
     pygame.display.flip()  # 让最近绘制的屏幕可见
 
 
-def update_bullets(bullets):  # 更新子弹的位置，并且删除已经消失的子弹
+def update_bullets(thanos, screen, ship, first_settings, bullets):  # 更新子弹的位置，并且删除已经消失的子弹
     bullets.update()  # 更新子弹的位置
     for bullet in bullets.copy():  # 删除已经消失的子弹
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+    check_bullet_thano_collisions(first_settings, screen, ship, thanos, bullets)
+
+
+def check_bullets_thano_collisions(thanos, screen, ship, first_settings, bullets):
+    collisions = pygame.sprite.groupcollide(bullets, thanos, True, True)
+    if(len(thanos)) == 0:  # 删除现有子弹并且重新创建一波泰坦飞船
+        bullets.empty()
+        create_fleet(first_settings, screen, ship, thanos)
 
 
 def update_thanos(first_settings, thanos):  # 更新所有外星人的位置
     check_fleet_edges(first_settings, thanos)
     thanos.update()
+
 
 def create_fleet(first_settings, screen, ship, thanos):  # 创建外星人群
     thano = Thano(first_settings, screen)
